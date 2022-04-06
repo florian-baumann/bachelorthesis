@@ -69,43 +69,39 @@ def calculate_Area(geohash, neighberhood_layers):
     #  'k58n2j', '7gxyrw', 'k58n2h', '7gxyre', '7gxyrd']
     
     geohashList = []
-    geohashList.append(geohash)     #initialen Geohash hinzufügen
+    geohashList.append(geohash)     #adding inner geohash
     index = 0
-    # if index == 1:
-    #     geohashList.append(neighbors(geohash))
-    #     geohashList = flattenList(geohashList)
-    #     #geohashList.append(geohash)
-    #     index = index+1
-    #     #print("tets", geohashList)
-    #   wenn keine Layers dann gib initialen geohash wieder zurück
+
     if neighberhood_layers == 0:
         return geohashList
-    #   iteriere sooft wie neighberhood_Layers gefordert werden   
+
+    #   iterate in the number of layers 
     while index <= neighberhood_layers:
         index = index + 1
         tempList = []
         
-        #   berechne für jeden geohash in geohahsList die Neighbours und füge sie der Teporären geohashList hinzu
+        # calculate for every user in the geohashList the surrounding geohashes and add them to tempList
         for hash in geohashList:
             tempHash = neighbors(hash)
             tempList.append(tempHash)
 
-        #   füge tempöräre geohashListe der finalen hinzu, und "entferne" eckige Klammern in der temporären Liste
+        # flatting  tempList and add it to final geohashList
         geohashList.append(flattenList(tempList))
         
-        #   wenn mehr als ein Geohash, entferne eckige klammern in finale geohashListe (die der kürzlich hinzugefügten TemporärenListe)
+        # if final geohashList will contain more than one geohash (index>0) flatt it. To ensure geohashList is "[string]" 
         if index > 0:
             geohashList = flattenList(geohashList)
 
-        #   wenn alle Layers hinzugefügt = index hochgezählt, breche while-Schleife ab
+        # if all layers calculated exit while loop
         if index == neighberhood_layers:
             break
-    # filtere alle Duplikate aus GeohashListe 
+
+    # ffilter all duplicates from geohashList
     geohashListFiltered = filterDiplicates(geohashList)
 
     print("final calculated inner area of request:")
     print(geohashListFiltered)
-    print("size of calculated geohash array:", len(geohashListFiltered))
+    #print("size of calculated geohash array:", len(geohashListFiltered))
     return geohashListFiltered
 
  
@@ -118,10 +114,9 @@ def calculateOverlap(geohashList1, geohashList2):
 #   calculateOverlap(['7gxyrs', '7gxyrv', '7gxyru', 'k58n24', 'k58n2j', 'helo'], ['k58n2j', 'k58n2m', '7gxyrv', '7gxyrk', 'k58n25', 'hello'])
 #   --> 33
  
-    
     overlapNumber = 0
 
-    #überprüfe ob Länge der Listen und Länge der Geohashes gleich ist, wenn nicht gebe Error
+    # check if length of Lists and length of geohashes is correct
     if len(geohashList1) == len(geohashList2) and len(geohashList1[0]) == len(geohashList2[0]):
         
         for geohash in geohashList1:
@@ -164,10 +159,11 @@ def index(request):
 
 
         #checks if longitude and latitude coordinates are given, if yes encode it to geohash and remove values
-        # if form.data['longitude']!=0 and form.data['latitude']!=0:
-        #     form.data['geohash'] = latlongToGeohash(form.data['longitude'], form.data['latitude'], geohash_length)
-        #     form.data['longitude'] = 0
-        #     form.data['latitude'] = 0
+        if int(form.data['longitude'])!=0 and int(form.data['latitude'])!=0:
+            form.data['geohash'] = latlongToGeohash(form.data['longitude'], form.data['latitude'], geohash_length)
+            
+            form.data['longitude'] = 0
+            form.data['latitude'] = 0
 
         
 
@@ -182,7 +178,7 @@ def index(request):
 
         # calculate the expiration time point
         form.data['expire_at'] = datetime.now() + timedelta(hours= int(form.data['expire']))
-        form.data['expire'] = 0
+        form.data['expire'] = 1
         #print("new user entry expire_at", form.data['expire_at']) 
 
    
@@ -214,7 +210,7 @@ def index(request):
 
 
             #print(all_users)
-            #print(">>>>>>>>>>> final neighbours: ", neighbors)
+            print(">>>>>>>>>>> final neighbours: ", neighbors)
 
 
             return render(request, "answer.html", {"users": neighbors})
