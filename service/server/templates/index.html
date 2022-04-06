@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Tasks - 
+{% endblock title %}
+
+
+
+{% block content %}
+   
+    <form method="post">
+        {% csrf_token %} <!-- token to avoid cross-site request forgery (CSRF) attacks -->
+        
+        <h1>Add New Position/ Update Position</h1>
+        </br>
+
+        
+        mail: {{user_form.mail}} </br>
+        expire (in hours) (1-720): {{user_form.expire}} </br>
+        either: </br>
+        longitude: {{user_form.longitude}} </br>
+        latitude: {{user_form.latitude}} </br>
+        or: </br>
+        geohash: {{user_form.geohash}} </br>
+
+        <!--{{user_form.as_p}}-->
+
+        <button type="submit">SUBMIT</button>
+    </form>
+
+    </br>
+    </br>
+
+
+    <!-- All Users:</br>
+    user.mail -- (user.location) -- user.expire -- user.geohash_length -- user.neighberhood_layers -- user.geohash -- user.longitude -- user.latitude
+    <ul>
+        {% for user in all_users %} 
+            <li>{{user.mail}} -- ({{user.location}}) -- {{user.expire}} -- {{user.geohash_length}} -- {{user.neighberhood_layers}} -- {{ user.geohash}} -- {{user.longitude}} -- {{user.latitude}}</li>
+        {% endfor %}
+    </ul> -->
+    
+{% endblock content %}
