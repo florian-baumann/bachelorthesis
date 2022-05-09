@@ -25,7 +25,7 @@ SECRET_KEY = '!j%p(b6)kg(#bufdk24nuv4eld_q6#*(03aso=+xo)t*xg2v-v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
 
 
 # Application definition
@@ -75,21 +75,13 @@ WSGI_APPLICATION = 'neighborhood.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
-# altes SQL Installation
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydatabase',
-        'USER': 'flo',
-        'PASSWORD' : 'mypassword',
-        'HOST' : 'localhost',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD' : 'postgres',
+        'HOST' : 'db',
         'PORT' : '5432'
     }
 }
