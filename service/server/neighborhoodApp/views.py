@@ -159,8 +159,8 @@ def index(request):
 
 
         #checks if longitude and latitude coordinates are given, if yes encode it to geohash and remove values
-        if int(form.data['longitude'])!=0 and int(form.data['latitude'])!=0:
-            form.data['geohash'] = latlongToGeohash(form.data['longitude'], form.data['latitude'], geohash_length)
+        if float(form.data['latitude'])!=0 and float(form.data['longitude'])!=0:
+            form.data['geohash'] = latlongToGeohash(form.data['latitude'], form.data['longitude'], geohash_length)
             
             form.data['longitude'] = 0
             form.data['latitude'] = 0
