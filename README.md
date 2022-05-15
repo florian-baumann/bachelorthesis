@@ -4,14 +4,18 @@ This GitHub repository contains the source code of the bachelor thesis "A Coarse
 ## Service implementation: `/service`
 
 ### Requirements
-- Docker=20.10.13
+- Docker=20.10.14
+- docker-compose=1.29.2
 
 
 ### Starting our service
 1. clone the project
 2. go to the folder `/service/server`
 3. build and start docker containers with `$ docker-compose up`
-4. sever sould be live at http://localhost:8000/
+4. stop with `Ctrl-C`
+5. migrate Database `$ docker-compose run web python3 manage.py migrate`
+6. start docker containers with `$ docker-compose up`
+4. Application sould be live at http://localhost:8000/
 
 
 ## Experiments: `/experiments`
